@@ -12,7 +12,7 @@ from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 
 from posts.models import Group, Post, Follow, Comment
-from yatube.settings import POST_COUNT
+from posts.utils import POST_COUNT
 
 User = get_user_model()
 TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)

@@ -1,10 +1,9 @@
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 
-from yatube.settings import POST_COUNT
+from posts.utils import paginator
 from posts.forms import PostForm, CommentForm
 from posts.models import Group, Post, Follow
 
@@ -12,10 +11,8 @@ User = get_user_model()
 
 
 def index(request):
-    post_list = Post.objects.all()
-    paginator = Paginator(post_list, POST_COUNT)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    post_list = Post.objects.select_related('author', 'group')
+    page_obj = paginator(post_list, request)
     context = {
         'page_obj': page_obj,
     }
@@ -25,9 +22,7 @@ def index(request):
 def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
     posts = group.posts.all()
-    paginator = Paginator(posts, POST_COUNT)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page_obj = paginator(posts, request)
     context = {
         'group': group,
         'page_obj': page_obj,
@@ -39,9 +34,7 @@ def profile(request, username):
     author = get_object_or_404(User, username=username)
     post_count = author.posts.all().count()
     author_post = author.posts.all()
-    paginator = Paginator(author_post, POST_COUNT)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page_obj = paginator(author_post, request)
     if request.user.is_authenticated:
         following = Follow.objects.filter(
             user=request.user, author=author
@@ -101,7 +94,6 @@ def post_edit(request, post_id):
         instance=post
     )
     if form.is_valid():
-        post.author = request.user
         post.save()
         return redirect('posts:post_detail', post.pk)
     form = PostForm(instance=post)
@@ -127,9 +119,7 @@ def add_comment(request, post_id):
 @login_required
 def follow_index(request):
     post_list = Post.objects.filter(author__following__user=request.user)
-    paginator = Paginator(post_list, POST_COUNT)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page_obj = paginator(post_list, request)
     context = {
         'page_obj': page_obj,
     }

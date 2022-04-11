@@ -3,8 +3,8 @@
 {% block content %}
 {% load thumbnail %}
 {% load user_filters %}
-<div class="container py-5">
-      <div class="row">
+  <div class="container py-5">
+    <div class="row">
         <aside class="col-12 col-md-3">
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
@@ -32,8 +32,8 @@
           </ul>
         </aside>
         <article class="col-12 col-md-9">
-          {% thumbnail post.image "1200x500" crop="center" upscale=True as im %}
-            <img class="card-img my-2" width="{{ im.width }}" height="{{ im.height }}" src="{{ im.url }}">
+          {% thumbnail post.image "1024x1024" upscale=True as im %}
+            <img style="width: 600px; height: 400x" src="{{ im.url }}">
             {% endthumbnail %}
           <p>{{ post.text|linebreaks }}</p>
           {% if post.author == request.user %}

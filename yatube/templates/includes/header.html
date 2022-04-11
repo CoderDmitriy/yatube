@@ -1,6 +1,6 @@
 {% load static %}
 <header>
-  <nav class="navbar navbar-light"
+  <nav class="navbar navbar-dark bg-dark"
   style="background-color: lightskyblue">
   <div class="container">
     <a class="navbar-brand"
@@ -16,7 +16,7 @@
     <ul class="nav nav-pills">
       {% with request.resolver_match.view_name as view_name %}
       <li class="nav-item"> 
-        <a class="nav-link {% if view_name  == 'posts:index' %}active{% endif %}"
+        <a class="nav-link  {% if view_name  == 'posts:index' %}active{% endif %}"
           href="{% url 'posts:index' %}"
         >
           Главная

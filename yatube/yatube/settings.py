@@ -1,4 +1,3 @@
-
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -105,7 +104,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'posts:index'
-POST_COUNT = 10
 CSRF_FAILURE_VIEW = 'core.views.csrf_failure'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
