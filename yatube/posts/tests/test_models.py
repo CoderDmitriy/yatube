@@ -21,11 +21,13 @@ class PostModelTest(TestCase):
             slug='Тестовый слаг',
             description='Тестовое описание',)
 
-    def test_str_post(self):
+    def test_str_post_and_group(self):
         post = PostModelTest.post
-        expected_object_name = post.text[:15]
-        self.assertEqual(expected_object_name, str(post))
-
-    def test_str_group(self):
-        group = PostModelTest.group
-        self.assertEqual(group.title, 'Тестовая группа')
+        field_labels = {
+            'text': 'Текст поста',
+            'group': 'Группа',
+        }
+        for field, value in field_labels.items():
+            with self.subTest(field=field):
+                self.assertEqual(post._meta.get_field(field).verbose_name,
+                                 value)

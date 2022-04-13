@@ -12,7 +12,7 @@ class PostForm(forms.ModelForm):
             'group': 'Группа',
             'image': 'Изображение'
         }
-        help_text = {
+        help_texts = {
             'text': 'Текст нового поста',
             'group': 'Группа, к которой будет относится пост',
             'image': 'Выберите изображение'
@@ -24,4 +24,4 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ['text']
         labels = {'text': 'Добавить комментарий'}
-        help_text = {'text': 'Текст комментария'}
+        help_texts = {'text': 'Текст комментария'}

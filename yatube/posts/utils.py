@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator
 
-POST_COUNT = 10
+from yatube.settings import POST_COUNT
 
 
 def paginator(post_list, request):
