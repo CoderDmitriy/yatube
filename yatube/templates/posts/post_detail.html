@@ -32,9 +32,13 @@
           </ul>
         </aside>
         <article class="col-12 col-md-9">
-          {% thumbnail post.image "1024x1024" upscale=True as im %}
-            <img style="width: 600px; height: 400x" src="{{ im.url }}">
-            {% endthumbnail %}
+          {% thumbnail post.image "1024x1024" upscale=True  as im %}
+                  {% if post.image|is_portrait %}
+                    <img src="{{ im.url }}" width="40%" >
+                  {% else %}
+                    <img src="{{ im.url }}" width="100%">
+                  {% endif %}
+                {% endthumbnail %}
           <p>{{ post.text|linebreaks }}</p>
           {% if post.author == request.user %}
           <a class="btn btn-outline-secondary" href="{% url 'posts:post_edit' post.pk %}">

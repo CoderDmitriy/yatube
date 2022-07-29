@@ -22,9 +22,13 @@
             <strong class="d-block text-gray-dark">@{{ post.author }}</strong>
           </a>
           <p>
-            {% thumbnail post.image "1024x1024" upscale=True as im %}
-            <img style="width: 600px; height: 400px" src="{{ im.url }}">
-            {% endthumbnail %}
+            {% thumbnail post.image "1024x1024" upscale=True  as im %}
+                {% if post.image|is_portrait %}
+                  <img src="{{ im.url }}" width="40%" >
+                {% else %}
+                  <img src="{{ im.url }}" width="80%">
+                {% endif %}
+              {% endthumbnail %}
             {{ post.text|linebreaks }}
           </p>
           {% if post.group %}
